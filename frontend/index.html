@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResolveIt - Dispute Resolution Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow mb-6">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-indigo-700">ResolveIt</div>
+      <div class="space-x-4">
+        <button class="nav-btn text-gray-700 hover:text-indigo-700" data-section="homeSection">Home</button>
+        <button class="nav-btn text-gray-700 hover:text-indigo-700" data-section="userRegSection">Register User</button>
+        <button class="nav-btn text-gray-700 hover:text-indigo-700" data-section="caseRegSection">Register Case</button>
+        <button class="nav-btn text-gray-700 hover:text-indigo-700" data-section="adminSection">Admin</button>
+        <button class="nav-btn text-gray-700 hover:text-indigo-700" data-section="eduSection">Educational Resources</button>
+            </div>
+        </div>
+    </nav>
+
+  <!-- Notification Area -->
+  <div id="notificationContainer" class="fixed top-4 right-4 z-50 space-y-2"></div>
+        
+  <!-- Sections -->
+  <main class="container mx-auto px-4">
+        <!-- Home Section -->
+    <section id="homeSection" class="app-section">
+      <h1 class="text-3xl font-bold mb-4">Welcome to ResolveIt</h1>
+      <p class="mb-4 text-lg">ResolveIt is your trusted platform for fair, transparent, and expert-guided dispute resolution. Register your case, share evidence, and let our mediation panel help you reach a solution.</p>
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-2">How It Works</h2>
+        <ul class="list-disc ml-6 space-y-1">
+          <li>Register as a user and submit your dispute case.</li>
+          <li>Upload supporting documents, images, or audio as proof.</li>
+          <li>Our admin team will review your case and notify the opposite party.</li>
+          <li>Nominate witnesses and let the mediation panel guide the process.</li>
+          <li>Track your case status and receive a formal agreement upon resolution.</li>
+        </ul>
+      </div>
+    </section>
+
+        <!-- User Registration Section -->
+    <section id="userRegSection" class="app-section hidden">
+      <h2 class="text-2xl font-bold mb-4">User Registration</h2>
+      <div id="userRegFormContainer">
+        <form id="userRegForm" class="space-y-4 bg-white p-6 rounded shadow max-w-lg mx-auto">
+                                <div>
+            <label class="block font-semibold mb-1" for="userName">Name</label>
+            <input type="text" id="userName" name="name" required class="w-full border rounded px-3 py-2" />
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1" for="userAge">Age</label>
+            <input type="number" id="userAge" name="age" min="1" required class="w-full border rounded px-3 py-2" />
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1" for="userGender">Gender</label>
+            <select id="userGender" name="gender" required class="w-full border rounded px-3 py-2">
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1">Address</label>
+            <div class="flex space-x-2">
+              <input type="text" id="userStreet" name="street" placeholder="Street" required class="flex-1 border rounded px-3 py-2" />
+              <input type="text" id="userCity" name="city" placeholder="City" required class="flex-1 border rounded px-3 py-2" />
+              <input type="text" id="userZip" name="zip" placeholder="Zip Code" required class="flex-1 border rounded px-3 py-2" />
+                                </div>
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1" for="userEmail">Email</label>
+            <input type="email" id="userEmail" name="email" required class="w-full border rounded px-3 py-2" />
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1" for="userPhone">Phone Number</label>
+            <input type="tel" id="userPhone" name="phone" required class="w-full border rounded px-3 py-2" />
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1" for="userPhoto">Photo</label>
+            <input type="file" id="userPhoto" name="photo" accept="image/*" required class="w-full" />
+                                </div>
+          <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded hover:bg-indigo-700">Register</button>
+                        </form>
+                    </div>
+    </section>
+
+        <!-- Case Registration Section -->
+    <section id="caseRegSection" class="app-section hidden">
+      <h2 class="text-2xl font-bold mb-4">Case Registration</h2>
+      <div id="caseRegFormContainer">
+        <form id="caseRegForm" class="space-y-4 bg-white p-6 rounded shadow max-w-lg mx-auto">
+                                <div>
+            <label class="block font-semibold mb-1" for="caseType">Case Type</label>
+            <select id="caseType" name="caseType" required class="w-full border rounded px-3 py-2">
+              <option value="">Select Type</option>
+              <option value="Family">Family</option>
+              <option value="Business">Business</option>
+              <option value="Criminal">Criminal</option>
+                                    </select>
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1" for="issueDescription">Issue Description</label>
+            <textarea id="issueDescription" name="issueDescription" required class="w-full border rounded px-3 py-2"></textarea>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1" for="partyId">Party (Registered User)</label>
+            <select id="partyId" name="partyId" required class="w-full border rounded px-3 py-2">
+              <option value="">Loading users...</option>
+                                    </select>
+                                </div>
+          <div>
+            <label class="block font-semibold mb-1">Opposite Party Details</label>
+            <input type="text" id="oppositePartyName" name="oppositePartyName" placeholder="Name" required class="w-full border rounded px-3 py-2 mb-2" />
+            <input type="text" id="oppositePartyContact" name="oppositePartyContact" placeholder="Contact" required class="w-full border rounded px-3 py-2 mb-2" />
+            <input type="text" id="oppositePartyAddress" name="oppositePartyAddress" placeholder="Address" required class="w-full border rounded px-3 py-2" />
+                                </div>
+                                <div>
+            <label class="block font-semibold mb-1" for="proofFiles">Proof Upload (images, videos, audio)</label>
+            <input type="file" id="proofFiles" name="proofFiles" multiple accept="image/*,video/*,audio/*" class="w-full" />
+                                </div>
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" id="courtPending" name="courtPending" class="h-4 w-4" />
+            <label for="courtPending" class="font-semibold">Is this case pending in a judicial court or police station?</label>
+                                </div>
+          <div id="courtDetails" class="hidden">
+            <input type="text" id="caseNumber" name="caseNumber" placeholder="Case/FIR Number" class="w-full border rounded px-3 py-2 mb-2 mt-2" />
+            <input type="text" id="courtName" name="courtName" placeholder="Court/Police Station Name" class="w-full border rounded px-3 py-2" />
+                                </div>
+          <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded hover:bg-indigo-700">Register Case</button>
+        </form>
+                                    </div>
+    </section>
+
+    <!-- Admin Dashboard Section -->
+    <section id="adminSection" class="app-section hidden">
+      <h2 class="text-2xl font-bold mb-4">Admin Dashboard</h2>
+      <div id="adminDashboardContainer">
+        <!-- Admin Login Form -->
+        <form id="adminLoginForm" class="space-y-4 bg-white p-6 rounded shadow max-w-md mx-auto mb-8">
+                                            <div>
+            <label class="block font-semibold mb-1" for="adminUsername">Username</label>
+            <input type="text" id="adminUsername" name="adminUsername" required class="w-full border rounded px-3 py-2" value="admin" />
+                                            </div>
+                                            <div>
+            <label class="block font-semibold mb-1" for="adminPassword">Password</label>
+            <input type="password" id="adminPassword" name="adminPassword" required class="w-full border rounded px-3 py-2" value="password123" />
+          </div>
+          <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded hover:bg-indigo-700">Login</button>
+        </form>
+        <!-- Admin Dashboard Table (hidden until login) -->
+        <div id="adminDashboard" class="hidden">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex space-x-2">
+              <select id="statusFilter" class="border rounded px-2 py-1">
+                <option value="">All Statuses</option>
+                <option value="Queued">Queued</option>
+                <option value="Awaiting Response">Awaiting Response</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Panel Created">Panel Created</option>
+                <option value="Mediation in Progress">Mediation in Progress</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Unresolved">Unresolved</option>
+              </select>
+              <select id="typeFilter" class="border rounded px-2 py-1">
+                <option value="">All Types</option>
+                <option value="Family">Family</option>
+                <option value="Business">Business</option>
+                <option value="Criminal">Criminal</option>
+              </select>
+                                            </div>
+            <button id="logoutBtn" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</button>
+                                        </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded shadow">
+              <thead>
+                <tr>
+                  <th class="px-4 py-2">ID</th>
+                  <th class="px-4 py-2">Type</th>
+                  <th class="px-4 py-2">Party</th>
+                  <th class="px-4 py-2">Status</th>
+                  <th class="px-4 py-2">Created</th>
+                  <th class="px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="casesTableBody"></tbody>
+            </table>
+                                    </div>
+                                </div>
+        <!-- Panel Creation Modal -->
+        <div id="panelModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative">
+            <button id="closePanelModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">&times;</button>
+            <h3 class="text-xl font-bold mb-4">Create Mediation Panel</h3>
+            <form id="panelForm" class="space-y-3">
+              <input type="hidden" id="panelCaseId" />
+              <div class="flex space-x-2">
+                <input type="text" id="panelMemberName" placeholder="Name" class="flex-1 border rounded px-3 py-2" />
+                <input type="text" id="panelMemberExpertise" placeholder="Expertise (Lawyer, Scholar, Community)" class="flex-1 border rounded px-3 py-2" />
+                <input type="text" id="panelMemberContact" placeholder="Contact" class="flex-1 border rounded px-3 py-2" />
+                <button type="button" id="addPanelMemberBtn" class="bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600">Add</button>
+                            </div>
+              <div>
+                <h4 class="font-semibold mb-1">Panel Members</h4>
+                <ul id="panelMembersList" class="list-disc ml-6"></ul>
+                            </div>
+              <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded hover:bg-indigo-700">Create Panel</button>
+                        </form>
+                    </div>
+                </div>
+        <!-- Witness Nomination Modal -->
+        <div id="witnessModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+            <button id="closeWitnessModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">&times;</button>
+            <h3 class="text-xl font-bold mb-4">Nominate Witnesses</h3>
+            <form id="witnessForm" class="space-y-3">
+              <input type="hidden" id="witnessCaseId" />
+              <div>
+                <label class="block font-semibold mb-1" for="witnessName">Name</label>
+                <input type="text" id="witnessName" required class="w-full border rounded px-3 py-2" />
+            </div>
+              <div>
+                <label class="block font-semibold mb-1" for="witnessContact">Contact</label>
+                <input type="text" id="witnessContact" required class="w-full border rounded px-3 py-2" />
+                </div>
+                        <div>
+                <label class="block font-semibold mb-1" for="witnessRole">Role</label>
+                <input type="text" id="witnessRole" required class="w-full border rounded px-3 py-2" placeholder="e.g. Party, Opposite Party" />
+                        </div>
+                        <div>
+                <label class="block font-semibold mb-1" for="witnessNominatedBy">Nominated By</label>
+                <select id="witnessNominatedBy" required class="w-full border rounded px-3 py-2">
+                  <option value="">Select</option>
+                  <option value="party">Party</option>
+                  <option value="oppositeParty">Opposite Party</option>
+                </select>
+                        </div>
+              <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded hover:bg-indigo-700">Add Witness</button>
+                    </form>
+                </div>
+            </div>
+        <!-- Agreement Generation Modal -->
+        <div id="agreementModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative">
+            <button id="closeAgreementModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">&times;</button>
+            <h3 class="text-xl font-bold mb-4">Generate Agreement</h3>
+            <form id="agreementForm" class="space-y-3">
+              <input type="hidden" id="agreementCaseId" />
+              <div>
+                <label class="block font-semibold mb-1" for="agreementText">Agreement Text</label>
+                <textarea id="agreementText" rows="8" class="w-full border rounded px-3 py-2" required></textarea>
+                </div>
+              <button type="button" id="downloadAgreementBtn" class="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700">Download Agreement</button>
+            </form>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Educational Resources Section -->
+    <section id="eduSection" class="app-section hidden">
+      <h2 class="text-2xl font-bold mb-4">Educational Resources</h2>
+      <div id="eduResourcesContainer" class="space-y-6">
+        <div>
+          <h3 class="text-xl font-bold mb-2">Featured Articles</h3>
+          <ul class="list-disc ml-6 space-y-1">
+            <li><a href="https://www.mediate.com/articles/mediation-skills.cfm" target="_blank" class="text-indigo-700 underline hover:text-indigo-900">Top 10 Mediation Skills and Techniques</a></li>
+            <li><a href="https://www.pon.harvard.edu/daily/mediation/what-is-mediation-and-how-does-it-work/" target="_blank" class="text-indigo-700 underline hover:text-indigo-900">What is Mediation and How Does It Work?</a></li>
+            <li><a href="https://www.un.org/en/our-work/mediation" target="_blank" class="text-indigo-700 underline hover:text-indigo-900">UN: Mediation in International Disputes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-2">Videos</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <iframe class="w-full h-56 rounded" src="https://www.youtube.com/embed/1hFvH5cL7gI" title="Mediation Explained" frameborder="0" allowfullscreen></iframe>
+            <iframe class="w-full h-56 rounded" src="https://www.youtube.com/embed/3Q8nI1BqH1M" title="Conflict Resolution Skills" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-2">Workshops & Further Learning</h3>
+          <ul class="list-disc ml-6 space-y-1">
+            <li><a href="https://www.coursera.org/learn/conflict-resolution" target="_blank" class="text-indigo-700 underline hover:text-indigo-900">Coursera: Conflict Resolution Skills</a></li>
+            <li><a href="https://www.edx.org/course/negotiation-and-conflict-resolution" target="_blank" class="text-indigo-700 underline hover:text-indigo-900">edX: Negotiation and Conflict Resolution</a></li>
+          </ul>
+        </div>
+    </div>
+    </section>
+  </main>
+
+  <script src="frontend/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+{
+  "info": {
+    "name": "ResolveIt Backend API Tests",
+    "description": "Complete API testing for ResolveIt dispute resolution platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin-login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin-login"]
+            },
+            "description": "Authenticate admin user and receive JWT token"
+          },
+          "response": [
+            {
+              "name": "Successful Login",
+              "body": "{\n    \"success\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"message\": \"Login successful\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"John Doe\",\n    \"age\": 30,\n    \"gender\": \"Male\",\n    \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"New York\",\n        \"zip\": \"10001\"\n    },\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"1234567890\",\n    \"photo\": \"profile.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/register-user",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "register-user"]
+            },
+            "description": "Register a new user/party in the system"
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            },
+            "description": "Retrieve all registered users (for case registration dropdown)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Case Management",
+      "item": [
+        {
+          "name": "Register Case",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"caseType\": \"Family\",\n    \"issueDescription\": \"Dispute over property inheritance\",\n    \"partyId\": \"{{userId}}\",\n    \"oppositeParty\": {\n        \"name\": \"Jane Smith\",\n        \"contact\": \"jane.smith@example.com\",\n        \"address\": \"456 Oak Ave, Chicago, IL 60601\"\n    },\n    \"proof\": [],\n    \"courtPending\": {\n        \"isPending\": false\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/register-case",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "register-case"]
+            },
+            "description": "Register a new dispute case"
+          }
+        },
+        {
+          "name": "Get All Cases (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases?status=&caseType=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Filter by case status"
+                },
+                {
+                  "key": "caseType",
+                  "value": "",
+                  "description": "Filter by case type"
+                }
+              ]
+            },
+            "description": "Get all cases with optional filtering"
+          }
+        },
+        {
+          "name": "Get Case by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/case/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "case", "{{caseId}}"]
+            },
+            "description": "Get detailed information about a specific case"
+          }
+        },
+        {
+          "name": "Update Case Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"Awaiting Response\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/case/{{caseId}}/workflow-status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "case", "{{caseId}}", "workflow-status"]
+            },
+            "description": "Update case status with workflow validation"
+          }
+        },
+        {
+          "name": "Create Panel",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"panel\": [\n        {\n            \"name\": \"Lawyer John\",\n            \"expertise\": \"Lawyer\",\n            \"contact\": \"lawyer@example.com\"\n        },\n        {\n            \"name\": \"Scholar Ahmed\",\n            \"expertise\": \"Religious Scholar\",\n            \"contact\": \"scholar@example.com\"\n        },\n        {\n            \"name\": \"Community Leader\",\n            \"expertise\": \"Community Member\",\n            \"contact\": \"leader@example.com\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/case/{{caseId}}/panel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "case", "{{caseId}}", "panel"]
+            },
+            "description": "Create mediation panel with required expertise"
+          }
+        },
+        {
+          "name": "Add Witnesses",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"witnesses\": [\n        {\n            \"name\": \"Witness 1\",\n            \"contact\": \"witness1@example.com\",\n            \"role\": \"Character Witness\",\n            \"nominatedBy\": \"party\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/case/{{caseId}}/witnesses",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "case", "{{caseId}}", "witnesses"]
+            },
+            "description": "Add witnesses to a case"
+          }
+        },
+        {
+          "name": "Schedule Mediation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"scheduledAt\": \"2025-07-25T10:00:00Z\",\n    \"attendees\": [\"Party\", \"Opposite Party\", \"Panel Members\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/case/{{caseId}}/schedule-mediation",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "case", "{{caseId}}", "schedule-mediation"]
+            },
+            "description": "Schedule a mediation session"
+          }
+        },
+        {
+          "name": "Resolve Case",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"agreement\": \"Both parties agreed to the following terms...\",\n    \"satisfactionLevel\": 4\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/case/{{caseId}}/resolve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "case", "{{caseId}}", "resolve"]
+            },
+            "description": "Mark case as resolved with agreement details"
+          }
+        },
+        {
+          "name": "Opposite Party Response",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"accepted\": true,\n    \"reason\": \"Willing to proceed with mediation\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/case/{{caseId}}/opposite-party-response",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "case", "{{caseId}}", "opposite-party-response"]
+            },
+            "description": "Opposite party accepts or rejects mediation"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard & Analytics",
+      "item": [
+        {
+          "name": "Get Dashboard Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard", "stats"]
+            },
+            "description": "Get comprehensive dashboard statistics"
+          },
+          "response": [
+            {
+              "name": "Dashboard Stats",
+              "body": "{\n    \"totalCases\": 10,\n    \"statusDistribution\": {\n        \"queued\": 2,\n        \"awaitingResponse\": 3,\n        \"panelCreated\": 2,\n        \"inProgress\": 2,\n        \"resolved\": 1,\n        \"unresolved\": 0\n    },\n    \"casesByType\": {\n        \"Family\": 5,\n        \"Business\": 3,\n        \"Criminal\": 2\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "File Management",
+      "item": [
+        {
+          "name": "Upload Proof Documents",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "proof",
+                  "type": "file",
+                  "src": "/path/to/file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/upload-proof",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "upload-proof"]
+            },
+            "description": "Upload evidence files (images, videos, audio, PDFs)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Q&A System",
+      "item": [
+        {
+          "name": "Save Admin Answer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"query\": \"How long does mediation take?\",\n    \"answer\": \"Mediation typically takes 2-4 weeks depending on case complexity.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin-answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin-answer"]
+            },
+            "description": "Store admin answers for FAQ system"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3002"
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "caseId",
+      "value": ""
+    }
+  ]
+}
