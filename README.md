@@ -92,3 +92,4 @@ Screenshots of all major features are included in the `/screenshots` folder.
 - For any questions, please refer to the code comments or contact the developer.
 
 ---# RESOLVEIT
+# RESOLVEIT
